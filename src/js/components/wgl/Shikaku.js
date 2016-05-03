@@ -7,6 +7,7 @@ import './libs/CSS3DRenderer'
 import ParticleSystem from './ParticleSystem'
 import data from '../../data'
 import ShikakuData from './ShikakuData'
+import ArtistData from './ArtistData'
 import isMobile from '../../isMobile'
 import initGame from './SoundGame'
 
@@ -18,6 +19,7 @@ var controls;
 
 var particleSystem;
 var faces = [];
+var artistPageArray = [];
 
 var bModalOpen = false;
 
@@ -91,14 +93,16 @@ export default class Shikaku {
         var data = { _wp_json_nonce: window.nonce };
         var s = ShikakuData;
 
+        // 子ページは除外してトップレベルのページを取得
         $.getJSON(dir + "wp-json/wp/v2/pages?filter[post_parent]=0", data)
         .done((result)=>{
-            console.log(result);
 
             for (var i = 0; i < s.length; i++) {
 
                 switch ( s[i].slug ) {
                     case "artist":
+                        this.getArtistPages();
+                        continue;
                         break;
                     case "info":
                         this.getPosts();
@@ -135,13 +139,12 @@ export default class Shikaku {
         // タグも設定
         $.getJSON(dir + "wp-json/wp/v2/posts?" + filters, data)
         .done((result)=>{
-            console.log(result);
 
             var parent = document.getElementById('info');
 
             for (var i = 0; i < result.length; i++) {
 
-                parent.appendChild( this.createArticle(result[i]) );
+                parent.appendChild( this.createPostArticle(result[i]) );
 
             }
 
@@ -151,7 +154,7 @@ export default class Shikaku {
         });
     }
 
-    createArticle( obj ) {
+    createPostArticle( obj ) {
 
         var e = document.createElement('div');
         e.className = "info-article";
@@ -182,6 +185,80 @@ export default class Shikaku {
         e.appendChild( d );
 
         return e;
+    }
+
+    getArtistPages() {
+        let d = { _wp_json_nonce: window.nonce };
+
+        console.log('get');
+
+        // Artist配下の固定ページを取得
+        $.getJSON(dir + "wp-json/wp/v2/pages?filter[post_parent]=16", d)
+        .done((result)=>{
+
+            console.log(result);
+            artistPageArray = result;
+
+            this.createArtistPage();
+
+        })
+        .fail(()=>{
+
+        });
+    }
+
+    createArtistPage() {
+
+        let e = document.getElementById('artist');
+        let m = ArtistData.management;
+        let r = ArtistData.release;
+
+        for (let i = 0; i < m.length; i++) {
+
+            e.appendChild( this.createArtistArticle('management', m[i]) );
+        }
+
+        for (let i = 0; i < r.length; i++) {
+
+            e.appendChild( this.createArtistArticle('release', r[i]) );
+
+        }
+    }
+
+    createArtistArticle( type, obj ) {
+
+        let aa = document.createElement('div');
+        aa.className = 'artist-artist';
+
+        let al = document.createElement('div');
+        al.classList.add('artist-label');
+        al.classList.add(type);
+        aa.appendChild(al);
+
+        let img = new Image();
+        img.src = obj.imgPath;
+        img.className = 'artist-img';
+        aa.appendChild(img);
+
+        let n = document.createElement('div');
+        n.className = 'artist-name';
+        n.textContent = obj.name;
+        aa.appendChild(n);
+
+        // aa.addEventListener();
+        let o = artistPageArray.filter((item, index) => {
+            if (item.slug == obj.slug) return true;
+        })[0];
+
+        aa.addEventListener('click', ()=>{
+
+            console.log(o);
+            openModal(o);
+
+        }, false);
+
+        return aa;
+
     }
 
     createGame() {
@@ -242,6 +319,29 @@ function openModal( obj ) {
 
     $("body").append('<div id="modal-overlay"></div>');
 
+    createModalContent(obj);
+
+    $("#modal-overlay").fadeIn("slow");
+    $("#modal").fadeIn("slow");
+
+    centeringModal();
+
+    $("#modal-overlay, #modal-close").unbind().click(()=>{
+        closeModal();
+    });
+}
+
+function closeModal() {
+    $("#modal, #modal-overlay").fadeOut("slow", ()=>{
+        $("#modal-overlay").remove();
+        $("#modal").empty();
+    });
+
+    bModalOpen = false;
+}
+
+function createModalContent(obj) {
+
     let a = document.createElement('article');
     document.getElementById("modal").appendChild( a );
 
@@ -269,23 +369,6 @@ function openModal( obj ) {
     b.textContent = "close";
     a.appendChild(b);
 
-    $("#modal-overlay").fadeIn("slow");
-    $("#modal").fadeIn("slow");
-
-    centeringModal();
-
-    $("#modal-overlay, #modal-close").unbind().click(()=>{
-        closeModal();
-    });
-}
-
-function closeModal() {
-    $("#modal, #modal-overlay").fadeOut("slow", ()=>{
-        $("#modal-overlay").remove();
-        $("#modal").empty();
-    });
-
-    bModalOpen = false;
 }
 
 function centeringModal() {

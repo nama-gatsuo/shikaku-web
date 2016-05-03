@@ -1,0 +1,19 @@
+#info {
+  padding: 12px;
+  letter-spacing: -.40em; /* for inline-block */
+  .info-article {
+    display: inline-block; /* for inline-block */
+    width: 300px;
+    height: 300px;
+    letter-spacing: normal; /* for inline-block */
+    vertical-align: bottom; /* for inline-block */
+    margin: 0 0 12px 12px;
+    .info-article-excerpt {
+      img {
+        width: 100%;
+      }
+    }
+    .info-article-title {}
+    .info-article-date {}
+  }
+}

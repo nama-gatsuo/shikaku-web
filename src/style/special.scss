@@ -1,0 +1,13 @@
+
+#game-ul {
+  position: fixed;
+  opacity: 0.0;
+  bottom: -300px;
+  left: 100px;
+  .game-button {
+    list-style: none;
+    img {
+      width: 64px;
+    }
+  }
+}

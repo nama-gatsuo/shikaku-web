@@ -17,6 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.23/addons/p5.sound.min.js"></script>
     <div id="container"></div>
+    <div id="modal" style="display: none;"></div>
     <script src="<?php bloginfo('template_url'); ?>/dist/main.js"></script>
   </body>
 </html>

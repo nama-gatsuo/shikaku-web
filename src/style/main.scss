@@ -22,6 +22,7 @@
 
 #header {
   position: absolute;
+  z-index: 99;
   top: 0;
   width: 100%;
   height: 72px;
@@ -49,6 +50,7 @@
 
 #menu {
   position: absolute;
+  z-index: 98;
   top: 72px;
   right: 0;
   width: 160px;
@@ -61,7 +63,7 @@
       margin: 8px;
       font-size: 1.25em;
       padding: 8px 16px;
-      border-bottom: solid 1px #fff;
+      border: solid 1px #fff;
       a {
         text-decoration: none;
         color: #fff;
@@ -77,3 +79,4 @@
 @import "artist.scss";
 @import "info.scss";
 @import "special.scss";
+@import "modal.scss";

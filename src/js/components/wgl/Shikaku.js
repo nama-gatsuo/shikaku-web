@@ -2,7 +2,6 @@ import THREE from 'three'
 import TWEEN from 'tween.js'
 import $ from 'jquery'
 
-// import './libs/TrackballControls'
 import './libs/CSS3DRenderer'
 
 import ParticleSystem from './ParticleSystem'
@@ -19,6 +18,8 @@ var controls;
 
 var particleSystem;
 var faces = [];
+
+var bModalOpen = false;
 
 export default class Shikaku {
     constructor() {
@@ -56,14 +57,6 @@ export default class Shikaku {
             particleSystem = this.ps;
         }
 
-        // controls
-        // controls = new THREE.TrackballControls(camera, renderer.domElement);
-        // controls.rotateSpeed = 0.7;
-        // controls.zoomSpeed = 0.5;
-        // controls.noPan = true;
-        // controls.minDistance = 200;
-        // controls.maxDistance = 3000;
-
         window.addEventListener('resize', this.onWindowResize, false);
 
         animate();
@@ -76,6 +69,8 @@ export default class Shikaku {
         camera.updateProjectionMatrix();
 
         camera.lookAt(scene.position);
+
+        centeringModal();
     }
 
     createFace(slug) {
@@ -102,12 +97,16 @@ export default class Shikaku {
 
             for (var i = 0; i < s.length; i++) {
 
-                if (s[i].slug == "info") {
-                    this.getPosts();
-                    continue;
-                } else if (s[i].slug == "special") {
-
-                    continue;
+                switch ( s[i].slug ) {
+                    case "artist":
+                        break;
+                    case "info":
+                        this.getPosts();
+                        continue;
+                        break;
+                    case "special":
+                        continue;
+                        break;
                 }
 
                 var o = result.filter((item, index) => {
@@ -119,8 +118,7 @@ export default class Shikaku {
 
         })
         .fail(()=>{
-            // TODO: サーバー攻撃…なので他の方法を考える
-            this.getPages();
+            // this.getPages();
         });
     }
 
@@ -151,13 +149,13 @@ export default class Shikaku {
         .fail(()=>{
 
         });
-
     }
 
     createArticle( obj ) {
 
         var e = document.createElement('div');
         e.className = "info-article";
+        e.id = "article_" + obj.id;
 
         var ex = document.createElement('div');
         ex.className = "info-article-excerpt";
@@ -168,12 +166,17 @@ export default class Shikaku {
         t.className = "info-article-title";
         t.textContent = obj.title.rendered;
         e.appendChild( t );
+        t.addEventListener('click', ()=>{
+
+            openModal( obj );
+
+        }, false);
 
         var d = document.createElement('div');
         d.className = "info-article-date";
         var date = new Date( obj.date );
         var year = date.getFullYear();
-        var month = date.getMonth();
+        var month = date.getMonth()+1;
         var day = date.getDate();
         d.textContent = year + " / " + month + " / " + day;
         e.appendChild( d );
@@ -216,6 +219,8 @@ export default class Shikaku {
             .to(u, 1000)
             .easing(TWEEN.Easing.Exponential.InOut)
             .start();
+
+        if (bModalOpen) closeModal();
     }
 }
 
@@ -229,4 +234,66 @@ function animate() {
     TWEEN.update();
 
     renderer.render( scene, camera );
+}
+
+function openModal( obj ) {
+
+    bModalOpen = true;
+
+    $("body").append('<div id="modal-overlay"></div>');
+
+    let a = document.createElement('article');
+    document.getElementById("modal").appendChild( a );
+
+    let t = document.createElement('h1');
+    t.className = 'modal-title';
+    t.textContent = obj.title.rendered;
+    a.appendChild(t);
+
+    let d = document.createElement('time');
+    let date = new Date( obj.date );
+    let year = date.getFullYear();
+    let month = date.getMonth()+1;
+    let day = date.getDate();
+    d.dateTime = obj.date;
+    d.textContent = year + " / " + month + " / " + day;
+    a.appendChild( d );
+
+    let c = document.createElement('div');
+    c.className = 'modal-content';
+    c.innerHTML = obj.content.rendered;
+    a.appendChild(c);
+
+    let b = document.createElement('div');
+    b.id = 'modal-close';
+    b.textContent = "close";
+    a.appendChild(b);
+
+    $("#modal-overlay").fadeIn("slow");
+    $("#modal").fadeIn("slow");
+
+    centeringModal();
+
+    $("#modal-overlay, #modal-close").unbind().click(()=>{
+        closeModal();
+    });
+}
+
+function closeModal() {
+    $("#modal, #modal-overlay").fadeOut("slow", ()=>{
+        $("#modal-overlay").remove();
+        $("#modal").empty();
+    });
+
+    bModalOpen = false;
+}
+
+function centeringModal() {
+    var w = $( window ).width() ;
+    var h = $( window ).height() ;
+
+    var cw = $( "#modal" ).outerWidth();
+    var ch = $( "#modal" ).outerHeight();
+
+    $( "#modal" ).css({ "left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px" });
 }

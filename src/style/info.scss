@@ -1,5 +1,4 @@
 #info {
-  padding: 12px;
   letter-spacing: -.40em; /* for inline-block */
   .info-article {
     display: inline-block; /* for inline-block */
@@ -7,13 +6,34 @@
     height: 300px;
     letter-spacing: normal; /* for inline-block */
     vertical-align: bottom; /* for inline-block */
-    margin: 0 0 12px 12px;
+    border: 1px solid #000;
+    margin: 9px;
     .info-article-excerpt {
       img {
         width: 100%;
       }
     }
-    .info-article-title {}
-    .info-article-date {}
+    .info-article-title {
+      font-size: 1.2em;
+      cursor: pointer;
+      padding: 4px;
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+      background-color: rgba(255, 255, 255, 0.8);
+      text-align: center;
+      &:before {
+        content: " [ ";
+      }
+      &:after {
+        content: " ] ";
+      }
+      &:hover {
+        background-color: rgba(200, 200, 200, 0.8);
+      }
+    }
+    .info-article-date {
+      text-align: right;
+      padding: 4px;
+    }
   }
 }

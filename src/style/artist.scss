@@ -18,21 +18,27 @@ $lpc: "screen and (min-width:1441px)";
       left: 0;
       color: #fff;
       z-index: 2;
+      border-top: 45px solid;
+      border-right: 45px solid transparent;
+      &:after {
+        display: block;
+        font-size: 0.9em;
+        padding: 4px;
+        margin: 4px 0;
+        width: 120px;
+        text-align: center;
+      }
       &.management {
-        border-top: 40px solid #2D8BC9;
-        border-right: 40px solid transparent;
+        border-top-color: #2D8BC9;
         &:after {
           content: "Management";
-          font-size: 0.9em;
           background-color: #2D8BC9;
         }
       }
       &.release {
-        border-top: 40px solid #7ED957;
-        border-right: 40px solid transparent;
+        border-top-color: #7ED957;
         &:after {
           content: "Release";
-          font-size: 0.9em;
           background-color: #7ED957;
         }
       }
@@ -44,9 +50,12 @@ $lpc: "screen and (min-width:1441px)";
       height: 320px;
     }
     .artist-img {
-      width: 320px;
-      height: 320px;
+      width: 290px;
+      height: 290px;
+      margin: 14px;
+      border: 1px solid #000;
       opacity: 0.7;
+      cursor: pointer;
       &:hover {
         opacity: 1.0;
       }
@@ -59,6 +68,7 @@ $lpc: "screen and (min-width:1441px)";
       font-size: 1.2em;
       line-height: 1em;
       color: #fff;
+      padding: 4px;
     }
   }
 }

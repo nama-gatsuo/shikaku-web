@@ -2,7 +2,7 @@ import THREE from 'three'
 require('./libs/CSS3DRenderer');
 import Particle from './Particle'
 
-const ParticleNum = 50;
+const ParticleNum = 40;
 
 export default class ParticleSystem {
     constructor( scene ) {

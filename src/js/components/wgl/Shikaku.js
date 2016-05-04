@@ -165,6 +165,15 @@ export default class Shikaku {
         ex.innerHTML = obj.excerpt.rendered;
         e.appendChild( ex );
 
+        var d = document.createElement('div');
+        d.className = "info-article-date";
+        var date = new Date( obj.date );
+        var year = date.getFullYear();
+        var month = date.getMonth()+1;
+        var day = date.getDate();
+        d.textContent = year + " / " + month + " / " + day;
+        e.appendChild( d );
+
         var t = document.createElement('div');
         t.className = "info-article-title";
         t.textContent = obj.title.rendered;
@@ -174,15 +183,6 @@ export default class Shikaku {
             openModal( obj );
 
         }, false);
-
-        var d = document.createElement('div');
-        d.className = "info-article-date";
-        var date = new Date( obj.date );
-        var year = date.getFullYear();
-        var month = date.getMonth()+1;
-        var day = date.getDate();
-        d.textContent = year + " / " + month + " / " + day;
-        e.appendChild( d );
 
         return e;
     }

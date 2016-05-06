@@ -1,0 +1,31 @@
+#concept {
+  h2.caption {
+    text-align: center;
+    font-size: 3em;
+    padding: 32px 16px;
+  }
+  .contentArea {
+    position: relative;
+    img.bg {
+      width: 960px;
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+    .textArea {
+      position: absolute;
+      top: 0;
+      left: 0;
+      max-width: 928px;
+      padding: 16px;
+      p {
+        margin: 32px 0;
+      }
+      h3 {
+        margin: 16px 0;
+        padding: 16px;
+        border-left: 3px solid #000;
+        border-bottom: 1px solid #000;
+      }
+    }
+  }
+}

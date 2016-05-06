@@ -53,7 +53,7 @@ var s = (p) => {
 
         p.clear();
 
-        p.fill(255, 231, 242);
+        p.fill(45, 139, 201);
         p.rect(gameObj.currentBeat * rSize, 0, rSize, rSize * 16);
 
         p.stroke(196);
@@ -65,7 +65,7 @@ var s = (p) => {
             p.line(0, i * rSize, 960, i * rSize);
         }
 
-        p.fill(255, 219, 222);
+        p.fill(126, 217, 87);
         for (var i = 0; i < objNum; i++) {
             if (gameObj.on_of[i]) {
                 p.rect(gameObj.pos[i][0], gameObj.pos[i][1], rSize, rSize);

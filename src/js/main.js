@@ -7,7 +7,7 @@ import Application from './components/Application'
 import Page from './components/Page'
 
 /* 環境依存 */
-var rootPath = 'test';
+var rootPath = '/';
 
 render(
     <Router history={ createHistory() }>

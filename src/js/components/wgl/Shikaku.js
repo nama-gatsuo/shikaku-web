@@ -12,10 +12,9 @@ import isMobile from '../../isMobile'
 import initGame from './SoundGame'
 
 /* 環境依存 */
-var dir = data.dir.test;
+var dir = data.dir.production;
 
 var scene, camera, renderer;
-var controls;
 
 var particleSystem;
 var faces = [];
@@ -192,8 +191,8 @@ export default class Shikaku {
 
         console.log('get');
 
-        // Artist配下の固定ページを取得
-        $.getJSON(dir + "wp-json/wp/v2/pages?filter[post_parent]=16", d)
+        // Artist配下の固定ページ(id=6)を取得
+        $.getJSON(dir + "wp-json/wp/v2/pages?filter[post_parent]=6", d)
         .done((result)=>{
 
             console.log(result);
@@ -236,7 +235,7 @@ export default class Shikaku {
         aa.appendChild(al);
 
         let img = new Image();
-        img.src = obj.imgPath;
+        img.src =  data.imgPath + 'artist/' + obj.fileName;
         img.className = 'artist-img';
         aa.appendChild(img);
 
@@ -304,9 +303,8 @@ export default class Shikaku {
 function animate() {
     requestAnimationFrame( animate );
 
-    if ( !(isMobile.any()) ) {
-        particleSystem.update();
-    }
+    if ( !(isMobile.any()) ) particleSystem.update();
+
     camera.lookAt(new THREE.Vector3(0,0,0));
     TWEEN.update();
 

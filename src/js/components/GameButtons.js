@@ -4,7 +4,7 @@ import $ from 'jquery'
 import data from '../data'
 
 /* 環境依存 */
-var imgPath = data.dir.test + data.imgPath;
+var imgPath = data.imgPath;
 
 export default class GameButtons extends React.Component {
     constructor(props) {

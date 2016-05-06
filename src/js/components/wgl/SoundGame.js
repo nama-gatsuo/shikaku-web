@@ -1,7 +1,7 @@
 import P5 from "p5"
 
 /* 環境依存 */
-var audioPath = '/test/wp-content/themes/shikaku/asset/audio/'
+var audioPath = '/wp-content/themes/shikaku/asset/audio/'
 
 var s = (p) => {
     let gameObj = {

@@ -4,7 +4,7 @@ const data = {
         test: "/test/",
         production: "/"
     },
-    imgPath: 'wp-content/themes/shikaku/asset/img/'
+    imgPath: '/wp-content/themes/shikaku/asset/img/'
 
 };
 

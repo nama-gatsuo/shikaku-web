@@ -5,7 +5,7 @@ import $ from 'jquery'
 import data from '../data'
 
 /* 環境依存 */
-var dir = data.dir.test;
+var dir = data.dir.production;
 
 export default class Menu extends React.Component {
     constructor(props) {

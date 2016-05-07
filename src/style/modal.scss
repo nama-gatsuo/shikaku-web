@@ -3,16 +3,62 @@
   z-index: 2;
   height: 80%;
   width: 80%;
-  padding: 12px;
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid #000;
   border-radius: 6px;
   box-shadow: 0px 0px 12px rgba(255,255,255,0.8);
+  .post {
+    padding: 12px;
+  }
+
+  .anArtist {
+    .anArtist-img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      img {
+        position: absolute;
+        left: 0;
+        max-height: 800px;
+      }
+    }
+    .anArtist-info {
+      position: absolute;
+      left: 50%;
+      .anArtist-title {
+        padding: 12px;
+        font-size: 2em;
+      }
+      .anArtist-description {
+        padding: 12px;
+      }
+      .anArtist-links {
+        padding: 12px;
+        th {
+          padding: 8px;
+          width: 100px;
+          text-align: right;
+        }
+        td {
+          padding: 8px;
+        }
+      }
+    }
+  }
   #modal-close {
     position: absolute;
-    bottom: 12px;
+    top: -12px;
+    right: -12px;
+    padding: 8px;
+    border: 1px solid #000;
+    background-color: #fff;
+    border-radius: 12px;
     text-align: center;
     cursor: pointer;
+
   }
 }
 

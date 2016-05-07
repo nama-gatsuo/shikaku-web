@@ -22,6 +22,11 @@ var artistPageArray = [];
 
 var bModalOpen = false;
 
+const ModalType = {
+    post: 0,
+    page: 1
+};
+
 export default class Shikaku {
     constructor() {
         scene = new THREE.Scene();
@@ -179,7 +184,7 @@ export default class Shikaku {
         e.appendChild( t );
         t.addEventListener('click', ()=>{
 
-            openModal( obj );
+            openModal( obj, ModalType.post );
 
         }, false);
 
@@ -251,8 +256,7 @@ export default class Shikaku {
 
         aa.addEventListener('click', ()=>{
 
-            console.log(o);
-            openModal(o);
+            openModal( o, ModalType.page );
 
         }, false);
 
@@ -303,7 +307,7 @@ export default class Shikaku {
 function animate() {
     requestAnimationFrame( animate );
 
-    if ( !(isMobile.any()) ) particleSystem.update();
+    // if ( !(isMobile.any()) ) particleSystem.update();
 
     camera.lookAt(new THREE.Vector3(0,0,0));
     TWEEN.update();
@@ -311,13 +315,17 @@ function animate() {
     renderer.render( scene, camera );
 }
 
-function openModal( obj ) {
+function openModal( obj, modalType ) {
 
     bModalOpen = true;
 
     $("body").append('<div id="modal-overlay"></div>');
 
-    createModalContent(obj);
+    if ( modalType ) {
+        createModalArtist( obj );
+    } else {
+        createModalPost( obj );
+    }
 
     $("#modal-overlay").fadeIn("slow");
     $("#modal").fadeIn("slow");
@@ -338,9 +346,10 @@ function closeModal() {
     bModalOpen = false;
 }
 
-function createModalContent(obj) {
+function createModalPost(obj) {
 
     let a = document.createElement('article');
+    a.className = 'post';
     document.getElementById("modal").appendChild( a );
 
     let t = document.createElement('h1');
@@ -369,9 +378,23 @@ function createModalContent(obj) {
 
 }
 
+function createModalArtist(obj) {
+
+    let a = document.createElement('article');
+    a.className = 'anArtist';
+    a.innerHTML = obj.content.rendered;
+    document.getElementById("modal").appendChild( a );
+
+    let b = document.createElement('div');
+    b.id = 'modal-close';
+    b.textContent = "close";
+    a.appendChild(b);
+
+}
+
 function centeringModal() {
-    var w = $( window ).width() ;
-    var h = $( window ).height() ;
+    var w = $( window ).width();
+    var h = $( window ).height();
 
     var cw = $( "#modal" ).outerWidth();
     var ch = $( "#modal" ).outerHeight();
